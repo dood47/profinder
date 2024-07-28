@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Profile Picture Fetcher</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #profile-pic {
+            border-radius: 50%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Discord Profile Picture Fetcher</h1>
+    <input type="text" id="user-id" placeholder="Enter Discord User ID">
+    <input type="text" id="avatar-hash" placeholder="Enter Avatar Hash">
+    <button onclick="fetchProfilePicture()">Get Profile Picture</button>
+    <div id="profile-container">
+        <img id="profile-pic" src="" alt="Profile Picture" width="200" height="200">
+    </div>
+
+    <script>
+        function fetchProfilePicture() {
+            const userId = document.getElementById('user-id').value;
+            const avatarHash = document.getElementById('avatar-hash').value;
+
+            if (!userId || !avatarHash) {
+                alert('Please enter both user ID and avatar hash');
+                return;
+            }
+
+            const avatarUrl = `https://cdn.discordapp.com/avatars/${userId}/${avatarHash}.png?size=256`;
+            document.getElementById('profile-pic').src = avatarUrl;
+        }
+    </script>
+</body>
+</html>
