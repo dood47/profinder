@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Profile Picture Fetcher</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #profile-pic {
+            border-radius: 50%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Discord Profile Picture Fetcher</h1>
+    <input type="text" id="user-id" placeholder="Enter Discord User ID">
+    <button onclick="fetchProfilePicture()">Get Profile Picture</button>
+    <div id="profile-container">
+        <img id="profile-pic" src="" alt="Profile Picture" width="200" height="200">
+    </div>
+
+    <script>
+        async function fetchProfilePicture() {
+            const userId = document.getElementById('user-id').value;
+
+            if (!userId) {
+                alert('Please enter a valid user ID');
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://discord.com/api/v9/users/${userId}`, {
+                    headers: {
+                        'Authorization': 'Bearer YOUR_DISCORD_API_BEARER_TOKEN' // You need a valid bearer token here
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('User not found or invalid token');
+                }
+
+                const data = await response.json();
+                const avatarUrl = `https://cdn.discordapp.com/avatars/${userId}/${data.avatar}.png?size=256`;
+                document.getElementById('profile-pic').src = avatarUrl;
+            } catch (error) {
+                alert('Error fetching profile picture: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>
